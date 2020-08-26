@@ -6,22 +6,42 @@ using namespace std;
 
 class EmpWageBuilder
 {
+    private:
+        const int FULL_TIME = 8;
+        const int PART_TIME = 4;
+        int maxWorkingDayInMonth = 20;
+        int maxHoursPerMonth = 100;
+        int wagePerHr = 20;
+	    int dailyWage = 0;
+        int monthWage = 0;
+        int empHrs = 0;
+        int totalEmpHrs = 0;
+        int totalWorkingDays = 0;
+        string companyName;
+
     public:
+        EmpWageBuilder(string companyName, int wagePerHr, int maxWorkingDayInMonth, int maxHoursPerMonth);
         int getEmployeeWorkingHours();
-        int calculateDailyWage(int empWorkingHrs);
+        int calculateDailyWage();
         void calculateMonthWage();
 };
+
+EmpWageBuilder::EmpWageBuilder(string companyName, int wagePerHr, int maxWorkingDayInMonth, int maxHoursPerMonth)
+{
+    this -> companyName = companyName;
+    this -> wagePerHr = wagePerHr;
+    this -> maxWorkingDayInMonth = maxWorkingDayInMonth;
+    this -> maxHoursPerMonth = maxHoursPerMonth;
+}
 
 int EmpWageBuilder::getEmployeeWorkingHours()
 {
     const int IS_FULL_TIME = 1;
 	const int IS_PART_TIME = 2;
-    const int FULL_TIME = 8;
-    const int PART_TIME = 4;
     const int ABSENT = 3;
     int empWorkDuration = 0;
-
-	srand( time(0) );
+	
+    srand( time(NULL) );
 	int checkWorkingHours = rand() % 3 + 1;
 
     switch (checkWorkingHours)
@@ -41,12 +61,9 @@ int EmpWageBuilder::getEmployeeWorkingHours()
     return empWorkDuration;
 }
 
-int EmpWageBuilder::calculateDailyWage(int empWorkingHrs)
+int EmpWageBuilder::calculateDailyWage()
 {
-    const int EMP_RATE_PER_HR = 20;
-	int dailyWage = 0;
-
-    dailyWage = EMP_RATE_PER_HR * empWorkingHrs;
+    dailyWage = wagePerHr * getEmployeeWorkingHours();
 
 	cout << "Employee Daily Wage: " << dailyWage << endl;
     return dailyWage;
@@ -54,32 +71,25 @@ int EmpWageBuilder::calculateDailyWage(int empWorkingHrs)
 
 void EmpWageBuilder::calculateMonthWage()
 {
-    const int MONTH_TOTAL_WORKING_DAYS = 20;
-    const int MAX_WORKING_HRS = 100;
-
-    int dailyWage = 0;
-    int monthWage = 0;
-    int empHrs = 0;
-    int totalEmpHrs = 0;
-    int totalWorkingDays = 0;
-
-    while( totalEmpHrs < MAX_WORKING_HRS && totalWorkingDays < MONTH_TOTAL_WORKING_DAYS )
+    while( totalEmpHrs < maxHoursPerMonth && totalWorkingDays < maxWorkingDayInMonth )
     {
-        empHrs = getEmployeeWorkingHours();
-        dailyWage = calculateDailyWage(empHrs);
+        dailyWage = calculateDailyWage();
         monthWage = monthWage + dailyWage;
         totalEmpHrs = totalEmpHrs + empHrs;
         totalWorkingDays++;
         sleep(1);
     }
 
-    cout << "Monthly Wage Of Employee: " << monthWage << endl;
+    cout << companyName << ", Monthly Wage Of Employee: " << monthWage << endl;
 }
 
 int main()
 {
     cout << "Hello Welcome To Employee Wage Computation Problem" << endl;
-    EmpWageBuilder *emp = new EmpWageBuilder();
+    EmpWageBuilder *emp;
+    emp = new EmpWageBuilder("Apple", 200, 22, 180);
+    emp -> calculateMonthWage();
+    emp = new EmpWageBuilder("Microsoft", 150, 24, 200);
     emp -> calculateMonthWage();
     delete emp;
     return 0;
