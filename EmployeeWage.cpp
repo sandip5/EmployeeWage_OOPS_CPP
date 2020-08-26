@@ -11,19 +11,27 @@ int getEmployeeWorkingHours()
 	const int IS_PART_TIME = 2;
     const int FULL_TIME = 8;
     const int PART_TIME = 4;
+    const int ABSENT = 3;
+    int empWorkDuration = 0;
 
 	srand( time(0) );
 	int checkWorkingHours = rand() % 3 + 1;
-	
-    if( checkWorkingHours == IS_FULL_TIME )
-		return FULL_TIME;
 
-	if( checkWorkingHours== IS_PART_TIME )
-	    return PART_TIME;
-    
-    if( checkWorkingHours == 3)
-        cout << "Employee Is Absent." << endl;
-    return 0;
+    switch (checkWorkingHours)
+    {
+        case IS_FULL_TIME:
+            empWorkDuration = FULL_TIME;
+            break;
+        case IS_PART_TIME:
+            empWorkDuration = PART_TIME;
+            break;
+        case ABSENT:
+            break;
+        default:
+            cout << "Invalid Result" << endl;
+    }
+
+    return empWorkDuration;
 }
 
 void calculateDailyWage(int empWorkingHrs)
@@ -33,7 +41,7 @@ void calculateDailyWage(int empWorkingHrs)
 
     dailyWage = EMP_RATE_PER_HR * empWorkingHrs;
 
-	cout << "Employee Daily Wagre: " << dailyWage << endl;
+	cout << "Employee Daily Wage: " << dailyWage << endl;
 }
 
 int main()
