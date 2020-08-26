@@ -3,42 +3,41 @@
 
 using namespace std;
 
-bool isPresent()
+int getEmployeeWorkingHours()
 {
     cout << "Hello Welcome To Employee Wage Computation Problem" << endl;
+    
+    const int IS_FULL_TIME = 1;
+	const int IS_PART_TIME = 2;
+    const int FULL_TIME = 8;
+    const int PART_TIME = 4;
+
 	srand( time(0) );
-	int checkAttendance = rand() % 2 + 1;
+	int checkWorkingHours = rand() % 3 + 1;
 	
-    if( checkAttendance == 1 )
-	{
-        cout << "Employee Is Present" << endl;
-		return true;
-	}
+    if( checkWorkingHours == IS_FULL_TIME )
+		return FULL_TIME;
 
-	if( checkAttendance == 2 )
-	{
-		cout << "Employee Is Absent" << endl;
-        return false;
-	}
-
-    return false;
+	if( checkWorkingHours== IS_PART_TIME )
+	    return PART_TIME;
+    
+    if( checkWorkingHours == 3)
+        cout << "Employee Is Absent." << endl;
+    return 0;
 }
 
-void calculateDailyWage(bool attendeeStatus)
+void calculateDailyWage(int empWorkingHrs)
 {
-    if(attendeeStatus)
-    {
-        const int EMP_RATE_PER_HR = 20;
-	    const int EMP_HRS = 8;
-	    int dailyWage = 0;
+    const int EMP_RATE_PER_HR = 20;
+	int dailyWage = 0;
 
-        dailyWage = EMP_RATE_PER_HR * EMP_HRS;
-		cout << "Employee Daily Wagre: " << dailyWage << endl;
-    }
+    dailyWage = EMP_RATE_PER_HR * empWorkingHrs;
+
+	cout << "Employee Daily Wagre: " << dailyWage << endl;
 }
 
 int main()
 {
-    calculateDailyWage(isPresent());
+    calculateDailyWage(getEmployeeWorkingHours());
     return 0;
 }
