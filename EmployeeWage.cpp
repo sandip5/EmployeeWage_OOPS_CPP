@@ -82,6 +82,5 @@ int main()
     EmpWageBuilder *emp = new EmpWageBuilder();
     emp -> calculateMonthWage();
     delete emp;
-    free(emp);
     return 0;
 }
