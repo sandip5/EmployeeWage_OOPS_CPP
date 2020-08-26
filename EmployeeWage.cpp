@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <unistd.h>
 
 using namespace std;
 
@@ -34,18 +35,35 @@ int getEmployeeWorkingHours()
     return empWorkDuration;
 }
 
-void calculateDailyWage(int empWorkingHrs)
+int calculateDailyWage(int empWorkingHrs)
 {
     const int EMP_RATE_PER_HR = 20;
 	int dailyWage = 0;
 
     dailyWage = EMP_RATE_PER_HR * empWorkingHrs;
 
-	cout << "Employee Daily Wage: " << dailyWage << endl;
+	cout << "Employee Daily Wagre: " << dailyWage << endl;
+    return dailyWage;
+}
+
+void calculateMonthWage()
+{
+    const int MONTH_TOTAL_WORKING_DAYS = 20;
+    int dailyWage = 0;
+    int monthWage = 0;
+
+    for( int day = 1; day <= MONTH_TOTAL_WORKING_DAYS; day++ )
+    {
+        dailyWage = calculateDailyWage(getEmployeeWorkingHours());
+        monthWage = monthWage + dailyWage;
+        sleep(1);
+    }
+
+    cout << "Monthly Wage Of Employee: " << monthWage << endl;
 }
 
 int main()
 {
-    calculateDailyWage(getEmployeeWorkingHours());
+    calculateMonthWage();
     return 0;
 }
