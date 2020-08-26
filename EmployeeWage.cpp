@@ -4,7 +4,15 @@
 
 using namespace std;
 
-int getEmployeeWorkingHours()
+class EmpWageBuilder
+{
+    public:
+        int getEmployeeWorkingHours();
+        int calculateDailyWage(int empWorkingHrs);
+        void calculateMonthWage();
+};
+
+int EmpWageBuilder::getEmployeeWorkingHours()
 {
     const int IS_FULL_TIME = 1;
 	const int IS_PART_TIME = 2;
@@ -33,18 +41,18 @@ int getEmployeeWorkingHours()
     return empWorkDuration;
 }
 
-int calculateDailyWage(int empWorkingHrs)
+int EmpWageBuilder::calculateDailyWage(int empWorkingHrs)
 {
     const int EMP_RATE_PER_HR = 20;
 	int dailyWage = 0;
 
     dailyWage = EMP_RATE_PER_HR * empWorkingHrs;
 
-	cout << "Employee Daily Wagre: " << dailyWage << endl;
+	cout << "Employee Daily Wage: " << dailyWage << endl;
     return dailyWage;
 }
 
-void calculateMonthWage()
+void EmpWageBuilder::calculateMonthWage()
 {
     const int MONTH_TOTAL_WORKING_DAYS = 20;
     const int MAX_WORKING_HRS = 100;
@@ -71,6 +79,9 @@ void calculateMonthWage()
 int main()
 {
     cout << "Hello Welcome To Employee Wage Computation Problem" << endl;
-    calculateMonthWage();
+    EmpWageBuilder *emp = new EmpWageBuilder();
+    emp -> calculateMonthWage();
+    delete emp;
+    free(emp);
     return 0;
 }
