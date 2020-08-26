@@ -6,8 +6,6 @@ using namespace std;
 
 int getEmployeeWorkingHours()
 {
-    cout << "Hello Welcome To Employee Wage Computation Problem" << endl;
-    
     const int IS_FULL_TIME = 1;
 	const int IS_PART_TIME = 2;
     const int FULL_TIME = 8;
@@ -49,13 +47,21 @@ int calculateDailyWage(int empWorkingHrs)
 void calculateMonthWage()
 {
     const int MONTH_TOTAL_WORKING_DAYS = 20;
+    const int MAX_WORKING_HRS = 100;
+
     int dailyWage = 0;
     int monthWage = 0;
+    int empHrs = 0;
+    int totalEmpHrs = 0;
+    int totalWorkingDays = 0;
 
-    for( int day = 1; day <= MONTH_TOTAL_WORKING_DAYS; day++ )
+    while( totalEmpHrs < MAX_WORKING_HRS && totalWorkingDays < MONTH_TOTAL_WORKING_DAYS )
     {
-        dailyWage = calculateDailyWage(getEmployeeWorkingHours());
+        empHrs = getEmployeeWorkingHours();
+        dailyWage = calculateDailyWage(empHrs);
         monthWage = monthWage + dailyWage;
+        totalEmpHrs = totalEmpHrs + empHrs;
+        totalWorkingDays++;
         sleep(1);
     }
 
@@ -64,6 +70,7 @@ void calculateMonthWage()
 
 int main()
 {
+    cout << "Hello Welcome To Employee Wage Computation Problem" << endl;
     calculateMonthWage();
     return 0;
 }
