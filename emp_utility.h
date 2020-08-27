@@ -1,20 +1,18 @@
-#include <string>
-#include <vector>
-#include <iostream>
+#include "CompanyEmpWage.h"
 
 using namespace std;
 
 namespace emp_std
 {
-    void displayCompanyWages(vector<EmpWageBuilder> companies)
+    void displayCompanyWages(vector<emp_model_spc::EmpWageBuilder> companies)
     {
-        for(EmpWageBuilder it : companies)
+        for(emp_model_spc::EmpWageBuilder it : companies)
 	    {
 		    cout << it.getCompanyName() << ", Total Wage : " << it.getTotalWage() << endl; 
 	    }
     }
 
-    void searchTotalWage(vector<EmpWageBuilder> companies)
+    void searchTotalWage(vector<emp_model_spc::EmpWageBuilder> companies)
     {
         int companyTotalWage = 0;
 	    cout << "================ Searching Result When We Input Company Name Provide Total Wage ===============" << endl;
@@ -22,7 +20,7 @@ namespace emp_std
         cout << "Enter Company Name: " << endl;
         cin >> companyName;
 
-	    for(EmpWageBuilder it : companies)
+	    for(emp_model_spc::EmpWageBuilder it : companies)
 	    {
 		    if(it.getCompanyName() == companyName)
 		    {
