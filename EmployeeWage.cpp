@@ -12,6 +12,7 @@ class EmpWageBuilder
     int maxWorkingDayInMonth;
     int maxHoursPerMonth;
     int wagePerHr;
+    vector<int> storeDailyWage;
 
     public:
         EmpWageBuilder(){};
@@ -22,12 +23,14 @@ class EmpWageBuilder
         int getWagePerHr();
         int getMaxWorkingDayInMonth();
         int getMaxHoursPerMonth();
+        void setDailyWage(vector<int> storeDailyWag);
 };
 
 class CompanyEmpWage
 {
     private:
         vector<EmpWageBuilder> companies;
+        vector<int> storeDayWage;
 
     public:
         int getEmployeeWorkingHours();
@@ -43,6 +46,11 @@ EmpWageBuilder::EmpWageBuilder(string companyName, int wagePerHr, int maxWorking
     this -> wagePerHr = wagePerHr;
     this -> maxWorkingDayInMonth = maxWorkingDayInMonth;
     this -> maxHoursPerMonth = maxHoursPerMonth;
+}
+
+void EmpWageBuilder::setDailyWage(vector<int> storeDailyWage)
+{
+    this -> storeDailyWage = storeDailyWage;
 }
 
 int EmpWageBuilder::getWagePerHr()
@@ -110,6 +118,7 @@ int CompanyEmpWage::calculateDailyWage(int wagePerHr)
     dailyWage = wagePerHr * getEmployeeWorkingHours();
 
 	cout << "Employee Daily Wage: " << dailyWage << endl;
+    storeDayWage.push_back(dailyWage);
     return dailyWage;
 }
 
@@ -129,6 +138,7 @@ void CompanyEmpWage::calculateMonthWage(EmpWageBuilder details)
         sleep(1);
     }
 
+    details.setDailyWage(storeDayWage);
     details.setDetails(monthWage);
     cout << details.getCompanyName() << ", Monthly Wage Of Employee: " << monthWage << endl;
     saveDetails(details);
