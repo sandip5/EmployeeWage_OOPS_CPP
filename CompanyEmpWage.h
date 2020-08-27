@@ -4,7 +4,16 @@
 
 namespace company_emp_wage
 {
-    class CompanyEmpWage
+    class Company
+    {
+        virtual int getEmployeeWorkingHours() = 0;
+        virtual int calculateDailyWage(int wagePerHr) = 0;
+        virtual void calculateMonthWage(emp_model_spc::EmpWageBuilder details) = 0;
+        virtual void saveDetails(emp_model_spc::EmpWageBuilder details) = 0;
+        virtual vector<emp_model_spc::EmpWageBuilder> getSavedDetails() = 0;
+    };
+
+    class CompanyEmpWage : public Company
     {
         private:
             vector<emp_model_spc::EmpWageBuilder> companies;
