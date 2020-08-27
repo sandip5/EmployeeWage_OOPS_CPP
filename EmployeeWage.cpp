@@ -2,8 +2,11 @@
 #include <ctime>
 #include <unistd.h>
 #include <vector>
+#include <string>
+#include "emp_utility.h"
 
 using namespace std;
+using namespace emp_std;
 
 class EmpWageBuilder
 {
@@ -152,33 +155,6 @@ void CompanyEmpWage::calculateMonthWage(EmpWageBuilder details)
 void CompanyEmpWage::saveDetails(EmpWageBuilder details)
 {
     companies.push_back(details);
-}
-
-void displayCompanyWages(vector<EmpWageBuilder> companies)
-{
-    for(EmpWageBuilder it : companies)
-	{
-		cout << it.getCompanyName() << ", Total Wage : " << it.getTotalWage() << endl; 
-	}
-}
-
-void searchTotalWage(vector<EmpWageBuilder> companies)
-{
-    int companyTotalWage = 0;
-	cout << "================ Searching Result When We Input Company Name Provide Total Wage ===============" << endl;
-    string companyName;
-    cout << "Enter Company Name: " << endl;
-    cin >> companyName;
-
-	for(EmpWageBuilder it : companies)
-	{
-		if(it.getCompanyName() == companyName)
-		{
-			companyTotalWage =companyTotalWage + it.getTotalWage();
-		}
-	}
-
-	cout << "Company Total Wage Of All Employees: " << companyTotalWage << endl;
 }
 
 void constructEmployeeWage()
