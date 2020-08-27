@@ -37,7 +37,7 @@ class CompanyEmpWage
         int calculateDailyWage(int wagePerHr);
         void calculateMonthWage(EmpWageBuilder details);
         void saveDetails(EmpWageBuilder details);
-        void showSavedWage();
+        vector<EmpWageBuilder> getSavedDetails();
 };
 
 EmpWageBuilder::EmpWageBuilder(string companyName, int wagePerHr, int maxWorkingDayInMonth, int maxHoursPerMonth)
@@ -81,6 +81,11 @@ string EmpWageBuilder::getCompanyName()
 int EmpWageBuilder::getTotalWage()
 {
     return totalWage;
+}
+
+vector<EmpWageBuilder> CompanyEmpWage::getSavedDetails()
+{
+    return companies;
 }
 
 int CompanyEmpWage::getEmployeeWorkingHours()
@@ -149,7 +154,7 @@ void CompanyEmpWage::saveDetails(EmpWageBuilder details)
     companies.push_back(details);
 }
 
-void CompanyEmpWage::showSavedWage()
+void displayCompanyWages(vector<EmpWageBuilder> companies)
 {
     for(EmpWageBuilder it : companies)
 	{
@@ -195,7 +200,7 @@ void constructEmployeeWage()
     for(int calculateForEach = 0; calculateForEach < numberOfCompany; calculateForEach++)
         companyEmpWage.calculateMonthWage(*emp[calculateForEach]);
     
-    companyEmpWage.showSavedWage();
+    displayCompanyWages(companyEmpWage.getSavedDetails());
 }
 
 int main()
