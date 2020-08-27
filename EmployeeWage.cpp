@@ -162,6 +162,25 @@ void displayCompanyWages(vector<EmpWageBuilder> companies)
 	}
 }
 
+void searchTotalWage(vector<EmpWageBuilder> companies)
+{
+    int companyTotalWage = 0;
+	cout << "================ Searching Result When We Input Company Name Provide Total Wage ===============" << endl;
+    string companyName;
+    cout << "Enter Company Name: " << endl;
+    cin >> companyName;
+
+	for(EmpWageBuilder it : companies)
+	{
+		if(it.getCompanyName() == companyName)
+		{
+			companyTotalWage =companyTotalWage + it.getTotalWage();
+		}
+	}
+
+	cout << "Company Total Wage Of All Employees: " << companyTotalWage << endl;
+}
+
 void constructEmployeeWage()
 {
     cout << "Hello Welcome To Employee Wage Computation Problem" << endl;
@@ -201,6 +220,7 @@ void constructEmployeeWage()
         companyEmpWage.calculateMonthWage(*emp[calculateForEach]);
     
     displayCompanyWages(companyEmpWage.getSavedDetails());
+    searchTotalWage(companyEmpWage.getSavedDetails());
 }
 
 int main()
