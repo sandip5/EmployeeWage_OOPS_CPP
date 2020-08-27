@@ -14,6 +14,7 @@ class EmpWageBuilder
     int wagePerHr;
 
     public:
+        EmpWageBuilder(){};
         EmpWageBuilder(string companyName, int wagePerHr, int maxWorkingDayInMonth, int maxHoursPerMonth);
         void setDetails(int totalWage);
         string getCompanyName();
@@ -146,13 +147,49 @@ void CompanyEmpWage::showSavedWage()
 	}
 }
 
-int main()
+void constructEmployeeWage()
 {
     cout << "Hello Welcome To Employee Wage Computation Problem" << endl;
-    EmpWageBuilder apple("Apple", 200, 22, 180), microsoft("Microsoft", 150, 24, 200);
+    
+    cout << "Enter Number Of Company You Want To Add: " << endl;
+    int numberOfCompany;
+    cin >> numberOfCompany;
+    
+    EmpWageBuilder *emp[numberOfCompany];
+    
+    for(int iterator_company = 0; iterator_company < numberOfCompany; iterator_company++)
+    {
+        if (iterator_company > 0)
+        {
+            cout << "Enter Next New Company Details" << endl;
+        }
+        
+        cout << "Enter Company Name: " << endl;
+        string companyName;
+        cin >> companyName;
+        cout << "Enter Wage Per Hour: " << endl;
+        int wagePerHr;
+        cin >> wagePerHr;
+        cout << "Enter Number Of Working Days In A Month: " << endl;
+        int numberOfWorkingDaysInMonth;
+        cin >> numberOfWorkingDaysInMonth;
+        cout << "Enter Maximum Hours For A Month: " << endl;
+        int maxHoursInMonth;
+        cin >> maxHoursInMonth;
+        
+        emp[iterator_company] = new EmpWageBuilder(companyName, wagePerHr, numberOfWorkingDaysInMonth, maxHoursInMonth);
+    }
+
     CompanyEmpWage companyEmpWage;
-    companyEmpWage.calculateMonthWage(apple);
-    companyEmpWage.calculateMonthWage(microsoft);
+    
+    for(int calculateForEach = 0; calculateForEach < numberOfCompany; calculateForEach++)
+        companyEmpWage.calculateMonthWage(*emp[calculateForEach]);
+    
     companyEmpWage.showSavedWage();
+}
+
+int main()
+{
+    constructEmployeeWage();
     return 0;
 }
