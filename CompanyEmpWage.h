@@ -4,32 +4,23 @@
 
 namespace company_emp_wage
 {
-    class Company
-    {
-        virtual int getEmployeeWorkingHours() = 0;
-        virtual int calculateDailyWage(int wagePerHr) = 0;
-        virtual void calculateMonthWage(emp_model_spc::EmpWageBuilder details) = 0;
-        virtual void saveDetails(emp_model_spc::EmpWageBuilder details) = 0;
-        virtual vector<emp_model_spc::EmpWageBuilder> getSavedDetails() = 0;
-    };
-
-    class CompanyEmpWage : public Company
+    class CompanyEmpWage
     {
         private:
-            vector<emp_model_spc::EmpWageBuilder> companies;
+            vector<emp_model_spc::EmpWageBuilder> companiesList;
             vector<int> storeDayWage;
 
         public:
             int getEmployeeWorkingHours();
             int calculateDailyWage(int wagePerHr);
-            void calculateMonthWage(emp_model_spc::EmpWageBuilder details);
+            void calculateMonthWage(string companyName);
             void saveDetails(emp_model_spc::EmpWageBuilder details);
             vector<emp_model_spc::EmpWageBuilder> getSavedDetails();
     };
 
     vector<emp_model_spc::EmpWageBuilder> CompanyEmpWage::getSavedDetails()
     {
-        return companies;
+        return companiesList;
     }
 
     int CompanyEmpWage::getEmployeeWorkingHours()
@@ -71,29 +62,36 @@ namespace company_emp_wage
         return dailyWage;
     }
 
-    void CompanyEmpWage::calculateMonthWage(emp_model_spc::EmpWageBuilder details)
+    void CompanyEmpWage::calculateMonthWage(string companyName)
     {
         int totalEmpHrs = 0;
         int totalWorkingDays = 0;
         int dailyWage = 0;
         int monthWage = 0;
+        emp_model_spc::EmpWageBuilder* company;
 
-        while( totalEmpHrs < details.getMaxHoursPerMonth() && totalWorkingDays < details.getMaxWorkingDayInMonth() )
-        {
-            dailyWage = calculateDailyWage(details.getWagePerHr());
-            monthWage = monthWage + dailyWage;
-            totalWorkingDays++;
-            sleep(1);
-        }
+        for(emp_model_spc::EmpWageBuilder &companyIterator : companiesList)
+	    {
+            if (companyIterator.getCompanyName() == companyName)
+            {
+                while( totalEmpHrs < companyIterator.getMaxHoursPerMonth() && totalWorkingDays < companyIterator.getMaxWorkingDayInMonth() )
+                {
+                    dailyWage = calculateDailyWage(companyIterator.getWagePerHr());
+                    monthWage = monthWage + dailyWage;
+                    totalWorkingDays++;
+                    sleep(1);
+                }
+                
+                companyIterator.setDailyWage(storeDayWage);
+                companyIterator.setTotalWage(monthWage);
+                cout << companyIterator.getCompanyName() << ", Monthly Wage Of Employee: " << monthWage << endl;
+            }
 
-        details.setDailyWage(storeDayWage);
-        details.setTotalWage(monthWage);
-        cout << details.getCompanyName() << ", Monthly Wage Of Employee: " << monthWage << endl;
-        saveDetails(details);
+	    }        
     }
 
     void CompanyEmpWage::saveDetails(emp_model_spc::EmpWageBuilder details)
     {
-        companies.push_back(details);
+        companiesList.push_back(details);
     }
 }
